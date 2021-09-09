@@ -46,7 +46,7 @@ namespace SHU2ICS
             var driver = new EdgeDriver(option);
             driver.Url = "http://xk.shu.edu.cn/";
 
-            var tabelWait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var tabelWait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
             var tableElement = tabelWait.Until<IWebElement>(drv => drv.FindElement(By.XPath("/html/body/div[2]/div[1]/div[2]/div/table/tbody/tr[2]/td/table")));
             var rows = tableElement.FindElement(By.TagName("tbody")).FindElements(By.TagName("tr"));
 
