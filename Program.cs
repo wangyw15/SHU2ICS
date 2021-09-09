@@ -32,7 +32,7 @@ namespace SHU2ICS
             // writer.WriteLine(json);
             // writer.Close();
 
-            
+            //var schedule = JsonSerializer.Deserialize<Course[]>(File.ReadAllText("parsed.json"));
             var strICS = new CalendarSerializer().SerializeToString(GenerateICalFile(schedule));
             var writer = new StreamWriter("out.ics");
             writer.WriteLine(strICS);
@@ -161,18 +161,18 @@ namespace SHU2ICS
             {
                 foreach (var schedule in course.CourseSchedules)
                 {
-                    foreach (var singleClass in schedule.Classes)
-                    {
                         var currentEvent = new CalendarEvent();
                         currentEvent.Summary = course.CourseName;
                         currentEvent.Location = course.Classroom;
                         currentEvent.Organizer = new Organizer(course.TeacherName);
-                        var startTime = DateTime.Parse(startTimeList[singleClass - 1]);
+                        var startTime = DateTime.Parse(startTimeList[schedule.Classes[0] - 1]);
                         var currentDate = firstDay + new TimeSpan((schedule.Week - 1) * 7 + (int)schedule.DayOfWeek - 1, 0, 0, 0);
                         currentEvent.Start = new CalDateTime(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, startTime.Hour, startTime.Minute, startTime.Second));
-                        currentEvent.Duration = new TimeSpan(0, 45, 0);
+
+                        var endTime = DateTime.Parse(startTimeList[schedule.Classes.Last() - 1]) + new TimeSpan(0, 45, 0);
+                        currentEvent.End = new CalDateTime(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, endTime.Hour, endTime.Minute, endTime.Second));
                         calendar.Events.Add(currentEvent);
-                    }
+                    
                 }
             }
             return calendar;
