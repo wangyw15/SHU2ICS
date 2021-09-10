@@ -150,7 +150,7 @@ namespace SHU2ICS
             return ret;
         }
 
-        private static Calendar GenerateICalFile(Course[] courses)
+        private static Calendar GenerateICalFile(Course[] courses, bool combineSameCourses = true)
         {
             string[] startTimeList = { "08:00", "08:55", "10:00", "10:55", "13:00", "13:55", "15:00", "15:55", "18:00", "18:55", "20:00", "20:55" };
             var firstDay = new DateTime(2021, 9, 6);
@@ -161,18 +161,37 @@ namespace SHU2ICS
             {
                 foreach (var schedule in course.CourseSchedules)
                 {
+                    var currentDate = firstDay + new TimeSpan((schedule.Week - 1) * 7 + (int)schedule.DayOfWeek - 1, 0, 0, 0);
+
+                    if (combineSameCourses)
+                    {
                         var currentEvent = new CalendarEvent();
                         currentEvent.Summary = course.CourseName;
                         currentEvent.Location = course.Classroom;
                         currentEvent.Organizer = new Organizer(course.TeacherName);
+
                         var startTime = DateTime.Parse(startTimeList[schedule.Classes[0] - 1]);
-                        var currentDate = firstDay + new TimeSpan((schedule.Week - 1) * 7 + (int)schedule.DayOfWeek - 1, 0, 0, 0);
                         currentEvent.Start = new CalDateTime(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, startTime.Hour, startTime.Minute, startTime.Second));
 
                         var endTime = DateTime.Parse(startTimeList[schedule.Classes.Last() - 1]) + new TimeSpan(0, 45, 0);
                         currentEvent.End = new CalDateTime(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, endTime.Hour, endTime.Minute, endTime.Second));
                         calendar.Events.Add(currentEvent);
-                    
+                    }
+                    else
+                    {
+                        foreach (var singleClass in schedule.Classes)
+                        {
+                            var currentEvent = new CalendarEvent();
+                            currentEvent.Summary = course.CourseName;
+                            currentEvent.Location = course.Classroom;
+                            currentEvent.Organizer = new Organizer(course.TeacherName);
+                            var newCourse = new CalendarEvent();
+                            var startTime = DateTime.Parse(startTimeList[singleClass - 1]);
+                            currentEvent.Start = new CalDateTime(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, startTime.Hour, startTime.Minute, startTime.Second));
+                            currentEvent.Duration = new TimeSpan(0, 45, 0);
+                            calendar.Events.Add(currentEvent);
+                        }
+                    }
                 }
             }
             return calendar;
