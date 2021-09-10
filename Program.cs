@@ -1,10 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 
-using Ical.Net.Serialization;
-
-using SHU2ICS.DataTypes;
 using SHU2ICS.Utils;
 
 namespace SHU2ICS
