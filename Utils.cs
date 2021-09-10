@@ -137,10 +137,10 @@ namespace SHU2ICS.Utils
             return ret.ToArray();
         }
 
-        public static Calendar GenerateICalendar(Course[] courses, bool combineSameCourses = true)
+        public static Calendar GenerateICalendar(Course[] courses, DateTime termFirstDay, bool combineSameCourses = true)
         {
             string[] startTimeList = { "08:00", "08:55", "10:00", "10:55", "13:00", "13:55", "15:00", "15:55", "18:00", "18:55", "20:00", "20:55" };
-            var firstDay = new DateTime(2021, 9, 6);
+            //var firstDay = new DateTime(2021, 9, 6);
             var calendar = new Calendar();
             //calendar.Name = "课表";
             calendar.AddTimeZone("Asia/Shanghai");
@@ -148,7 +148,7 @@ namespace SHU2ICS.Utils
             {
                 foreach (var schedule in course.CourseSchedules)
                 {
-                    var currentDate = firstDay + new TimeSpan((schedule.Week - 1) * 7 + (int)schedule.DayOfWeek - 1, 0, 0, 0);
+                    var currentDate = termFirstDay + new TimeSpan((schedule.Week - 1) * 7 + (int)schedule.DayOfWeek - 1, 0, 0, 0);
 
                     if (combineSameCourses)
                     {

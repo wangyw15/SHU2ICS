@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 using SHU2ICS.Utils;
 
@@ -8,23 +9,19 @@ namespace SHU2ICS
     {
         static void Main(string[] args)
         {
+            Console.Write("请输入学期第一天（默认这天周一）（例如 2021-09-06）：");
+            var firstDay = DateTime.Parse(Console.ReadLine());
+
+            Console.WriteLine("请在打开的浏览器中登录并打开课表查询页面（最多等待120秒）");
             var rawData = ScheduleUtil.GetRawSchedule();
-            // var json = JsonSerializer.Serialize(rawData, new JsonSerializerOptions() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
-
-
-            //var rawData = JsonSerializer.Deserialize<string[][]>(File.ReadAllText("a.json"));
             var schedule = ScheduleUtil.ParseSchedule(rawData);
-
-            // var json = JsonSerializer.Serialize(schedule, new JsonSerializerOptions() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
-            // var writer = new StreamWriter("parsed.json");
-            // writer.WriteLine(json);
-            // writer.Close();
-
-            //var schedule = JsonSerializer.Deserialize<Course[]>(File.ReadAllText("parsed.json"));
-            var strICS = ScheduleUtil.SerializeToString(ScheduleUtil.GenerateICalendar(schedule));
+            var strICS = ScheduleUtil.SerializeToString(ScheduleUtil.GenerateICalendar(schedule, firstDay));
             var writer = new StreamWriter("out.ics");
             writer.WriteLine(strICS);
             writer.Close();
+            
+            Console.WriteLine("文件名：out.ics，按任意键退出");
+            Console.ReadKey();
         }
     }
 }
