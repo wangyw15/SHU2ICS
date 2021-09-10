@@ -126,6 +126,7 @@ namespace SHU2ICS.Utils
                 }
                 ret.Add(current.ToArray());
             }
+            driver.Close();
             return ret.ToArray();
         }
     }

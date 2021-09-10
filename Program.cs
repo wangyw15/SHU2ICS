@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Linq;
-
-using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Support.UI;
 
 using Ical.Net;
 using Ical.Net.CalendarComponents;
