@@ -29,13 +29,13 @@ namespace SHU2ICS
             // writer.Close();
 
             //var schedule = JsonSerializer.Deserialize<Course[]>(File.ReadAllText("parsed.json"));
-            var strICS = new CalendarSerializer().SerializeToString(GenerateICalFile(schedule));
+            var strICS = new CalendarSerializer().SerializeToString(GenerateICalendar(schedule));
             var writer = new StreamWriter("out.ics");
             writer.WriteLine(strICS);
             writer.Close();
         }
 
-        private static Calendar GenerateICalFile(Course[] courses, bool combineSameCourses = true)
+        private static Calendar GenerateICalendar(Course[] courses, bool combineSameCourses = true)
         {
             string[] startTimeList = { "08:00", "08:55", "10:00", "10:55", "13:00", "13:55", "15:00", "15:55", "18:00", "18:55", "20:00", "20:55" };
             var firstDay = new DateTime(2021, 9, 6);
