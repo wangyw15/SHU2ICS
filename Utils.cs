@@ -47,8 +47,6 @@ namespace SHU2ICS.Utils
             }
             return ret;
         }
-
-
     }
 
     public static class ScheduleUtil
@@ -116,6 +114,32 @@ namespace SHU2ICS.Utils
         {
             var ret = new List<string[]>();
             var option = new EdgeOptions() { UseChromium = true };
+            var driver = new EdgeDriver(option);
+            driver.Url = "http://xk.shu.edu.cn/";
+
+            var tabelWait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
+            var tableElement = tabelWait.Until<IWebElement>(drv => drv.FindElement(By.XPath("/html/body/div[2]/div[1]/div[2]/div/table/tbody/tr[2]/td/table")));
+            var rows = tableElement.FindElement(By.TagName("tbody")).FindElements(By.TagName("tr"));
+
+            for (var i = 1; i < rows.Count - 1; i++)
+            {
+                var current = new List<string>();
+                var cells = rows[i].FindElements(By.TagName("td"));
+                foreach (var cell in cells)
+                {
+                    current.Add(cell.Text);
+                }
+                ret.Add(current.ToArray());
+            }
+            driver.Close();
+            return ret.ToArray();
+        }
+
+        public static string[][] GetRawScheduleHeadlessly(string user, string password)
+        {
+            var ret = new List<string[]>();
+            var option = new EdgeOptions() { UseChromium = true };
+            option.AddArgument("--headless");
             var driver = new EdgeDriver(option);
             driver.Url = "http://xk.shu.edu.cn/";
 
