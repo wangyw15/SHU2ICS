@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <Choose>
@@ -22,7 +23,7 @@
         <DefineConstants>TRACE</DefineConstants>
         <Optimize>true</Optimize>
 
-        <PublishSingleFile>false</PublishSingleFile>
+        <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
 
