@@ -19,6 +19,7 @@
     </When>
     <When Condition=" '$(Configuration)' == 'Release' ">
       <PropertyGroup>
+        <DebugType>None</DebugType>
         <DebugSymbols>false</DebugSymbols>
         <DefineConstants>TRACE</DefineConstants>
         <Optimize>true</Optimize>
