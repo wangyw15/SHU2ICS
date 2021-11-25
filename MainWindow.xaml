@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SHU2ICS"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="课表生成iCalendar文件 - By wangyw15" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />

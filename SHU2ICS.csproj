@@ -23,11 +23,11 @@
         <Optimize>true</Optimize>
 
         <PublishSingleFile>false</PublishSingleFile>
-        <SelfContained>false</SelfContained>
+        <SelfContained>true</SelfContained>
         <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
 
         <InvariantGlobalization>true</InvariantGlobalization>
-        
+
         <PublishTrimmed>false</PublishTrimmed>
         <TrimMode>link</TrimMode>
         <TrimmerRootAssembly>true</TrimmerRootAssembly>
