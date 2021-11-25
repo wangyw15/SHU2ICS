@@ -8,10 +8,6 @@ using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Support.UI;
-
 using SHU2ICS.DataTypes;
 
 namespace SHU2ICS.Utils
@@ -51,6 +47,20 @@ namespace SHU2ICS.Utils
 
     public static class ScheduleUtil
     {
+        public readonly static string ReadTableScript = @"(function () {
+    var table = document.querySelector('body > div.wrapper > div.content-wrapper > div.content > div > table > tbody > tr:nth-child(2) > td > table');
+    var data = [];
+    for (var i = 1; i < table.rows.length - 1; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            if (!data[i - 1]) {
+                data[i - 1] = new Array();
+            }
+            data[i - 1][j] = table.rows[i].cells[j].innerHTML;
+        }
+    }
+    return data;
+})();";
+
         public static string SerializeToString(Calendar calendar) => new CalendarSerializer().SerializeToString(calendar);
 
         public static Course[] ParseSchedule(string[][] rawData)
@@ -110,7 +120,7 @@ namespace SHU2ICS.Utils
             return ret.ToArray();
         }
 
-        public static string[][] GetRawSchedule()
+        /*public static string[][] GetRawSchedule()
         {
             var ret = new List<string[]>();
             var option = new EdgeOptions() { UseChromium = true };
@@ -159,7 +169,7 @@ namespace SHU2ICS.Utils
             }
             driver.Close();
             return ret.ToArray();
-        }
+        }*/
 
         public static Calendar GenerateICalendar(Course[] courses, DateTime termFirstDay, bool combineSameCourses = true)
         {

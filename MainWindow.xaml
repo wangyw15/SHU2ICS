@@ -1,0 +1,23 @@
+﻿<Window x:Class="SHU2ICS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SHU2ICS"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <wv2:WebView2 Grid.Row="0" x:Name="browser" Source="http://xk.shu.edu.cn/" />
+        <Label Grid.Row="1">在上面登录之后打开课表查询页面；之后在下面选择学期第一天，须是周一（比如2021/11/29）；最后生成课表</Label>
+        <DatePicker Grid.Row="2" x:Name="firstDayPicker"/>
+        <Button Grid.Row="3" Content="生成课表" Height="30" Click="Generate_Click"/>
+    </Grid>
+</Window>
